@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    container_name: landpage
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgre
+      POSTGRES_PASSWORD: postgre
+      POSTGRES_DB: landpage_db
+    ports:
+      - "5434:5432"
+    networks:
+      - postgres-compose-network
+  pgadmin:
+    container_name: pgadmin4-landpage
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "15434:80"
+    networks:
+      - postgres-compose-network
+networks:
+  postgres-compose-network:
+    driver: bridge
