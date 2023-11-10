@@ -9,6 +9,7 @@ import tumnus.landpage.domain.entity.User;
 import tumnus.landpage.domain.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,6 +28,28 @@ public class UserController {
     public ResponseEntity<List<User>> listarTodos() {
         List<User> usuarios = service.listarTodos();
         return ResponseEntity.status(HttpStatus.OK).body(usuarios);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> buscarPorId(@PathVariable Long id) {
+        Optional<User> optionalUser = service.buscarPorId(id);
+
+        if(optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(optionalUser.get());
+    }
+
+    @PutMapping
+    public ResponseEntity<User> alterar (@RequestBody User user) {
+        User userSalvo = service.salvar(user);
+        return ResponseEntity.status(HttpStatus.OK).body(userSalvo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
