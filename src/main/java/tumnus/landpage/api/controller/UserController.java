@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tumnus.landpage.domain.entity.User;
+import tumnus.landpage.domain.integration.request.UserRequest;
+import tumnus.landpage.domain.integration.response.UserResponse;
 import tumnus.landpage.domain.service.UserService;
 
 import java.util.List;
@@ -19,9 +21,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<User> salvarUsuario(@RequestBody User user) {
-        User usuarioSalvo = service.salvar(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
+    public ResponseEntity<UserResponse> salvarUsuario(@RequestBody UserRequest userRequest) {
+        return service.salvarUsuario(userRequest);
     }
 
     @GetMapping
@@ -41,8 +42,8 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> alterar (@RequestBody User user) {
-        User userSalvo = service.salvar(user);
+    public ResponseEntity<UserResponse> alterar (@RequestBody UserRequest userRequest) {
+        UserResponse userSalvo = service.salvarUsuario(userRequest).getBody();
         return ResponseEntity.status(HttpStatus.OK).body(userSalvo);
     }
 

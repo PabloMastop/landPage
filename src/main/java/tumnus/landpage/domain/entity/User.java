@@ -1,13 +1,16 @@
 package tumnus.landpage.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Entity
-@Table(name = "usuario")
 @Getter
 @Setter
+@Entity
+@Builder
+@ToString
+@Table(name = "usuario")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
